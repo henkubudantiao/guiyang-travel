@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="generator" content="jianhao-travel-planner · 基准骨架 · 指纹 9c3c6249a4">
+<title>贵阳路书 · 三天两夜周末版</title>
+<script>document.documentElement.classList.add('js');</script>
+<style>
+:root{
+  --bg:#F7F5F0; --surface:#FCFBF7; --ink:#1C1B17; --ink2:#5C594E; --ink3:#8A8677;
+  --line:#E3DFD3; --accent:#2F5D43; --accent-soft:#E6EEE8; --on-accent:#F7F5F0;
+  --warn:#8A6D1F; --warn-soft:#F3EEDF;
+  --red:#b5493a; --gold:#c8a45c;
+  --radius:14px; --fs:19px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:var(--fs)}
+body{background:var(--bg);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;line-height:1.8;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:var(--on-accent)}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:var(--on-accent);padding:8px 16px;z-index:99;border-radius:0 0 8px 0;font-size:.8rem}
+.skip:focus{left:0}
+
+/* ---------- 左侧栏 ---------- */
+.side{position:fixed;inset:0 auto 0 0;width:236px;overflow-y:auto;background:#F2EEE3;border-right:1px solid var(--line);display:flex;flex-direction:column;padding:28px 22px;z-index:10}
+.logo{font-size:1.15rem;font-weight:800;letter-spacing:.02em}
+.logo span{color:var(--accent)}
+.logo-sub{font-size:.58rem;letter-spacing:.2em;color:var(--ink3);margin-top:4px;text-transform:uppercase}
+.nav-group{margin-top:26px}
+.nav-label{font-size:.6rem;letter-spacing:.2em;color:var(--ink3);text-transform:uppercase;margin-bottom:8px;padding-left:12px}
+.side nav a{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:9px;font-size:.82rem;color:#4A473E;transition:background .2s,color .2s;margin-bottom:2px}
+.side nav a:hover{background:#E8E3D4;color:var(--ink)}
+.side nav a.on{background:var(--accent);color:var(--on-accent);font-weight:600;box-shadow:0 3px 10px rgba(47,93,67,.25)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.side-foot{margin-top:auto;font-size:.66rem;color:var(--ink3);border-top:1px solid var(--line);padding-top:14px;line-height:2}
+
+/* ---------- 主区 ---------- */
+main{margin-left:236px}
+.wrap{max-width:860px;margin:0 auto;padding:0 44px}
+section{padding:64px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+.eyebrow{font-size:.62rem;letter-spacing:.24em;color:var(--accent);text-transform:uppercase;font-weight:600;margin-bottom:12px}
+h1{font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.35;font-weight:800;max-width:16em}
+h2{font-size:clamp(1.45rem,2.7vw,1.95rem);line-height:1.35;font-weight:800}
+.lead{color:var(--ink2);margin-top:12px;max-width:34em}
+
+/* ---------- 通用卡片/标签/表格 ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;margin-bottom:14px}
+.tag{display:inline-block;font-size:.66rem;padding:3px 10px;border-radius:99px;background:var(--accent-soft);color:var(--accent);font-weight:600;margin-left:8px;vertical-align:middle}
+.tag.dim{background:transparent;border:1px solid var(--line);color:var(--ink3);font-weight:400}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+strong{color:var(--ink)}
+table.tb{width:100%;border-collapse:collapse;margin-top:14px;font-size:.85rem;background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
+.tb th{background:#F2EEE3;text-align:left;padding:10px 12px;font-size:.78rem;color:var(--ink2);border-bottom:1px solid var(--line);white-space:nowrap}
+.tb td{padding:10px 12px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+.tb tr:last-child td{border-bottom:none}
+.tb td b{color:var(--ink)}
+
+/* ---------- 天气 ---------- */
+.weather{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:26px}
+.wday{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 12px;text-align:center}
+.wday .d{font-size:.7rem;color:var(--ink3)}
+.wday .w{font-size:.82rem;font-weight:700;margin-top:4px}
+.wday .t{font-size:.7rem;color:var(--ink2);margin-top:3px}
+
+/* ---------- 清单（可勾选） ---------- */
+.check{list-style:none;margin-top:16px}
+.check li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;background:var(--surface);cursor:pointer;transition:background .2s}
+.check li:hover{border-color:var(--accent)}
+.check li.done{background:var(--accent-soft)}
+.check li.done .ct{text-decoration:line-through;color:var(--ink3)}
+.check input{width:22px;height:22px;margin-top:2px;accent-color:var(--accent);flex:none;cursor:pointer}
+.check .ct{font-size:.92rem}
+.check li.hot{border:2px solid var(--warn);background:var(--warn-soft)}
+.check li.hot .ct b{color:#6B5A22}
+
+/* ---------- 每日照片 ---------- */
+.photos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 16px}
+.photos.single{grid-template-columns:1fr;max-width:340px;margin-left:auto;margin-right:auto}
+@media (max-width:900px){.photos{grid-template-columns:1fr}.photos.single{max-width:100%}}
+.photos figure{margin:0}
+.photos img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px;display:block;border:1px solid var(--line)}
+.photos.single img{aspect-ratio:auto;object-fit:contain}
+.photos figcaption{font-size:.68rem;color:var(--ink3);margin-top:5px;line-height:1.5}
+
+/* ---------- 每日 ---------- */
+.day{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px;scroll-margin-top:20px}
+.day.today{border:2px solid var(--accent);box-shadow:0 6px 24px rgba(47,93,67,.14)}
+.day-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:16px}
+.day-idx{font-size:.62rem;letter-spacing:.14em;color:var(--ink3)}
+.day-head h3{font-size:1.15rem;font-weight:800}
+.today-badge{display:none;font-size:.7rem;padding:4px 12px;border-radius:99px;background:var(--accent);color:var(--on-accent);font-weight:700;align-items:center;gap:6px}
+.day.today .today-badge{display:inline-flex}
+.slot{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:14px 0;border-bottom:1px dashed var(--line)}
+.slot:last-of-type{border-bottom:none}
+.slot-time{font-size:.78rem;font-weight:700;color:var(--accent);padding-top:2px}
+.slot-body{font-size:.9rem;color:var(--ink2)}
+.slot-body b,.slot-body strong{color:var(--ink);font-weight:700}
+.note-row{display:flex;gap:10px;margin-top:10px;padding:12px 14px;border-radius:10px;background:var(--accent-soft);font-size:.84rem;color:var(--ink2);align-items:flex-start}
+.note-row.photo{background:#EDF0E6}
+.note-row .ic{flex:none}
+.warn-line{margin-top:10px;padding:12px 14px;border-radius:10px;background:var(--warn-soft);font-size:.84rem;color:#6B5A22}
+
+/* ---------- 数据（预算） ---------- */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px 14px}
+.stat .n{font-size:1.5rem;font-weight:800;font-variant-numeric:tabular-nums}
+.stat .l{font-size:.72rem;color:var(--ink2);margin-top:3px}
+
+/* ---------- 提示 ---------- */
+.tips{counter-reset:tip;margin-top:16px}
+.tip{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.tip:last-child{border-bottom:none}
+.tip::before{counter-increment:tip;content:counter(tip);width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:800;font-size:.85rem;text-align:center;line-height:34px}
+.tip p{font-size:.9rem;color:var(--ink2);padding-top:5px}
+.sos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.sos{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.sos h4{font-size:.95rem;margin-bottom:8px}
+.sos p{font-size:.82rem;color:var(--ink2)}
+
+/* ---------- 工具条/返回顶部 ---------- */
+.toolbar{position:fixed;top:18px;right:20px;z-index:20;display:flex;gap:8px}
+.tbtn{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:.78rem;font-weight:700;color:var(--ink2);cursor:pointer;transition:all .2s}
+.tbtn:hover{border-color:var(--accent);color:var(--accent)}
+.backtop{position:fixed;bottom:24px;right:20px;z-index:20;width:46px;height:46px;border-radius:50%;background:var(--accent);color:var(--on-accent);border:none;font-size:1.1rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 4px 14px rgba(47,93,67,.3)}
+.backtop.show{opacity:1;pointer-events:auto}
+
+/* ---------- 入场动效 ---------- */
+html.js section .card,html.js section .day,html.js section .tip,html.js .wday,html.js .sos{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+html.js section.in .card,html.js section.in .day,html.js section.in .tip,html.js section.in .wday,html.js section.in .sos{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html.js section .card,html.js section .day,html.js section .tip,html.js .wday,html.js .sos{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:900px){
+  html{font-size:calc(var(--fs) - 1px);scroll-padding-top:136px}
+  body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+  .side{position:sticky;top:0;z-index:30;background:rgba(242,238,227,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);width:auto;flex-direction:row;flex-wrap:wrap;align-items:center;gap:4px 8px;padding:8px 10px;border-right:none;border-bottom:1px solid var(--line)}
+  .side nav{display:contents}
+  .logo{font-size:.92rem;flex:none}
+  .logo-sub,.side-foot{display:none}
+  .nav-group{margin:0;display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex:1 1 100%;min-width:0}
+  .nav-group::-webkit-scrollbar{display:none}
+  .nav-label{display:none}
+  .side nav a{padding:6px 10px;font-size:.74rem;white-space:nowrap;flex:none;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+  .nav-group--chips{margin-top:0;display:flex;grid-template-columns:none}
+  .nav-group--chips a{margin:0;padding:6px 9px;font-size:.72rem;line-height:1.3;white-space:nowrap;flex:none;text-align:center}
+  .nav-group--chips a.on{border-color:transparent}
+  main{margin-left:0}
+  .wrap{padding:0 14px}
+  section{padding:34px 0}
+  .card{padding:16px 16px;margin-bottom:12px}
+  .day{padding:18px 16px}
+  .day-head{padding-bottom:10px;margin-bottom:12px}
+  .slot{grid-template-columns:64px 1fr;gap:9px;padding:12px 0}
+  .slot-time{font-size:.72rem}
+  .note-row,.warn-line{padding:10px 12px}
+  .check li{padding:10px 12px;gap:10px}
+  .check input{width:24px;height:24px}
+  .weather{grid-template-columns:repeat(3,1fr);gap:8px}
+  .wday{padding:12px 8px}
+  .stats{grid-template-columns:1fr 1fr;gap:8px}
+  .stat{padding:14px 14px 10px}
+  .sos-grid{grid-template-columns:1fr}
+  .tb{font-size:.78rem;table-layout:fixed}
+  .tb th,.tb td{padding:7px 7px;word-break:break-word;overflow-wrap:anywhere}
+  .toolbar{top:auto;bottom:calc(14px + env(safe-area-inset-bottom));left:14px;right:auto;flex-direction:row}
+  .tbtn{padding:7px 11px;font-size:.72rem;box-shadow:0 2px 8px rgba(0,0,0,.08);background:rgba(252,251,247,.92)}
+  .backtop{bottom:calc(24px + env(safe-area-inset-bottom));right:16px}
+}
+
+/* ---------- 移动端表格列宽（colgroup）在桌面端还原 auto，桌面排版零变化 ---------- */
+@media (min-width:901px){.tb col{width:auto!important}}
+
+/* ---------- 打印 ---------- */
+@media print{
+  .side,.toolbar,.backtop,.skip{display:none}
+  main{margin-left:0}
+  body{background:#fff;font-size:12pt}
+  .wrap{max-width:100%;padding:0}
+  section{padding:20px 0;page-break-inside:avoid}
+  .day{page-break-inside:avoid}
+  .card,.day,.tip,.wday,.sos{opacity:1;transform:none}
+  .check li.done .ct{text-decoration:none;color:var(--ink)}
+}
+
+/* ---------- 兼容层（宁波/丽水 共用，勿删） ---------- */
+b,strong{color:var(--ink)}
+.warn-line b{color:inherit}
+.tb td .intro{display:block;font-size:.78rem;color:var(--ink3);margin-top:3px;line-height:1.5}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要内容</a>
+<div class="toolbar" role="group" aria-label="阅读工具">
+  <button class="tbtn" id="fontDec" aria-label="字号调小">A−</button>
+  <button class="tbtn" id="fontInc" aria-label="字号调大">A＋</button>
+  <button class="tbtn" id="printBtn" aria-label="打印这份路书">🖨 打印</button>
+</div>
+<aside class="side">
+  <div>
+    <div class="logo">贵阳<span>.</span></div>
+    <div class="logo-sub">3 天 2 晚 · 2 人</div>
+  </div>
+  <nav aria-label="页面导航">
+    <div class="nav-group">
+      <div class="nav-label">行程</div>
+      <a href="#overview">总览</a>
+      <a href="#drive">路程</a>
+      <a href="#day1">第 1 天 · 深夜抵达</a>
+      <a href="#day2">第 2 天 · 黔灵山</a>
+      <a href="#day3">第 3 天 · 花溪线</a>
+      <a href="#boost">备选</a>
+    </div>
+    <div class="nav-group nav-group--chips">
+      <div class="nav-label">备忘</div>
+      <a href="#ticket">门票</a>
+      <a href="#tips">提示</a>
+      <a href="#stay">住宿</a>
+      <a href="#cost">预算</a>
+      <a href="#sos">应急</a>
+      <a href="#eat">美食</a>
+      <a href="#gift">特产</a>
+    </div>
+  </nav>
+  <div class="side-foot">
+     unspecified出发地·高铁抵筑 · 10/23-10/25<br>
+    2 人同行<br>
+    信息 2026-10-21 实查
+  </div>
+</aside>
+<main id="main">
+  <div class="wrap">
+    <section id="overview">
+      <div class="eyebrow">总览</div>
+      <h1>贵阳 · 三天两夜周末版</h1>
+      <p class="lead">周五 23:30 抵贵阳北 → 周日 17:30 贵阳北发车。必去三件：黔灵山公园、天河潭、青岩古镇。骨架：<b>周六市区黔灵山一日，周日花溪线青岩→天河潭顺路回北站</b>，全程不走回头路。</p>
+      <p class="lead">餐饮口径=本地人常去老店（杨姨妈丝娃娃、老凯俚酸汤鱼、金必轩状元蹄、陕西路夜宵群），不收网红店与全国连锁。</p>
+      <div class="warn-line"><b>天气两源分歧声明：</b>中央气象台逐时口径周日全天无降水，AccuWeather 口径周日少量降雨 55%——两源打架，<b>折中处理：两人各带一把折叠伞</b>；周日主线溶洞/古镇本就不惧小雨，不改变行程结构。数据时点 2026-10-21，出发前一天（10-22 晚）再核一次逐时预报。</div>
+      <div class="weather">
+        <div class="wday"><div class="d">10/23 周五</div><div class="w">阴</div><div class="t">16~19℃ · 夜间无雨</div></div>
+        <div class="wday"><div class="d">10/24 周六</div><div class="w">阴转多云</div><div class="t">15~25℃ · 爬山好天</div></div>
+        <div class="wday"><div class="d">10/25 周日</div><div class="w">多云（备伞）</div><div class="t">15~23℃ · 两源分歧</div></div>
+      </div>
+      <p style="font-size:.66rem;color:var(--ink3);margin-top:8px">天气来源：中央气象台 nmc.cn 贵阳逐时+逐日（2026-10-21 查）· 中国天气网 weather.com.cn 互证 · AccuWeather 对照源</p>
+      <div class="card" id="prepCard">
+        <h2 style="font-size:1.05rem">⚠️ 必办清单（出发前倒计时口径）</h2>
+        <ul class="check">
+          <li><input type="checkbox" id="chk_p1"><span class="ct"><b>周四晚前：</b>微信小程序「贵客荟」或「黔灵山公园」公众号实名预约 <b>10-24 周六</b>入园——免费但必须预约，刷身份证入园（2026-05 起唯一官方渠道，其他渠道已停用）</span></li>
+          <li><input type="checkbox" id="chk_p2"><span class="ct"><b>周五出发前：</b>天河潭「通票+观光车」套票在携程/景区官方渠道提前下单（线上约 75 元，现场 17:30 停止售票）</span></li>
+          <li><input type="checkbox" id="chk_p3"><span class="ct"><b>周五出发前：</b>订好陕西路—飞山街商圈 200 元档连锁（选背街不临正街，深夜到站直奔）</span></li>
+          <li><input type="checkbox" id="chk_p4"><span class="ct"><b>随身：</b>身份证×2（入园+高铁+核验）、折叠伞×2、运动鞋（旱洞湿滑+九曲径台阶）、手机充电线</span></li>
+          <li><input type="checkbox" id="chk_p5"><span class="ct"><b>心理建设：</b>折耳根（鱼腥草）遍布蘸水与配菜，吃不惯提前跟店里说</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2 style="font-size:1.05rem">🎒 装备清单</h2>
+        <ul class="check">
+          <li><input type="checkbox" id="chk_g1"><span class="ct">薄外套/卫衣——周六夜 16℃上下，周日山顶/洞口更凉</span></li>
+          <li><input type="checkbox" id="chk_g2"><span class="ct">双肩包拉好拉链（黔灵山猕猴会抢手里食物和塑料袋，手机挂绳建议有）</span></li>
+          <li><input type="checkbox" id="chk_g3"><span class="ct">小面额现金备一点（夜宵摊偶有扫码故障）【估算口径，未核实】</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="drive">
+      <div class="eyebrow">路程</div>
+      <h2>路程 · 交通串联</h2>
+      <div class="card">
+        <b>大交通（你已购票）：</b>周五 23:30 抵贵阳北 · 周日 17:30 贵阳北发车。贵阳北站地铁 1 号线接驳，但 23:30 后地铁已收班（末班约 23 点前后【未核实具体时刻】），<b>深夜到站直接打车</b>，出站上网约车/出租排队区，约 15~20 元、15~20 分钟进老城。<br>
+        <b>市内口径：</b>两天景点分散且不在地铁一条线上，<b>以打车为主、地铁为辅</b>——黔灵山可地铁 3 号线「黔灵山公园站」C 口直达南门；天河潭可地铁 S1 线「天河潭站」A1 口，但周日带行李+赶火车，全程打车更稳。
+      </div>
+      <table class="tb">
+        <colgroup><col style="width:34%"><col style="width:18%"><col style="width:24%"><col style="width:24%"></colgroup>
+        <tr><th>段</th><th>里程/方式</th><th>耗时（平峰）</th><th>费用</th></tr>
+        <tr><td><b>贵阳北 → 陕西路住宿</b></td><td>约 10km · 打车</td><td>15~20 分钟</td><td>15~20 元/车</td></tr>
+        <tr><td><b>住宿 → 黔灵山南门</b></td><td>约 3km · 打车或地铁 3 号线</td><td>10 分钟</td><td>约 10 元/车</td></tr>
+        <tr><td><b>黔灵山 → 飞山街午餐</b></td><td>约 2.5km · 打车</td><td>10 分钟</td><td>约 10 元/车</td></tr>
+        <tr><td><b>住宿 → 青岩古镇南门</b></td><td>约 29~33km · 打车</td><td>40~50 分钟</td><td>60~80 元/车</td></tr>
+        <tr><td><b>青岩 → 天河潭</b></td><td>约 15km · 打车</td><td>20~30 分钟</td><td>约 30 元/车</td></tr>
+        <tr><td><b>天河潭 → 贵阳北</b></td><td>约 30km · 打车</td><td>30~40 分钟</td><td>约 60 元/车</td></tr>
+      </table>
+      <p style="font-size:.78rem;color:var(--ink3);margin-top:10px">节假日/周末早高峰预留：以上耗时 ×1.3。周日 16:00 天河潭上车是硬节点，16:30 是最后发车红线——迟到风险全部压在这段路上，宁可提前到天河潭门口等车。</p>
+    </section>
+
+    <section id="day1">
+      <div class="day">
+        <div class="day-head"><span class="day-idx">DAY 1 · 10-23 周五</span><h3>深夜抵达 · 陕西路夜宵</h3><span class="today-badge"><span class="dot"></span>当日</span></div>
+        <div class="note-row"><span class="ic">🧭</span><div><b>今日速览：</b>晚上=出发前简餐/高铁上解决；深夜 23:30=抵贵阳北打车进城；零点后=陕西路夜宵主战场（夜夜香板筋盖饭为押注项）。</div></div>
+        <div class="photos">
+          <figure><svg viewBox="0 0 300 200" width="100%" role="img" aria-label="夜宵路线示意"><rect width="300" height="200" fill="#E6EEE8"/><path d="M20 40 L120 60 L280 120" stroke="#2F5D43" stroke-width="4" fill="none" stroke-dasharray="8 5"/><circle cx="20" cy="40" r="8" fill="#b5493a"/><circle cx="120" cy="60" r="8" fill="#2F5D43"/><circle cx="280" cy="120" r="8" fill="#c8a45c"/><text x="30" y="30" font-size="13" fill="#1C1B17">贵阳北站</text><text x="95" y="90" font-size="13" fill="#1C1B17">住宿（陕西路圈）</text><text x="215" y="150" font-size="13" fill="#1C1B17">夜宵街</text></svg><figcaption>深夜动线：北站→酒店→夜宵（示意 · 自绘 SVG，非等比例）</figcaption></figure>
+          <figure><svg viewBox="0 0 300 200" width="100%" role="img" aria-label="板筋盖饭示意"><rect width="300" height="200" fill="#F3EEDF"/><ellipse cx="150" cy="110" rx="90" ry="50" fill="#FCFBF7" stroke="#E3DFD3"/><ellipse cx="150" cy="100" rx="55" ry="26" fill="#c8a45c" opacity=".65"/><text x="90" y="40" font-size="14" fill="#1C1B17">板筋盖饭 · 小 20 大 25</text></svg><figcaption>夜夜香板筋盖饭招牌货（示意 · 自绘 SVG，非等比例）</figcaption></figure>
+        </div>
+        <div class="slot"><div class="slot-time">19:30</div><div class="slot-body"><b>午餐与晚餐 · 路餐：</b>午餐出发前在家/单位解决，晚餐在车站简餐或高铁上订餐——今晚重头是到筑后的夜宵，别把胃提前填满。</div></div>
+        <div class="slot"><div class="slot-time">23:30</div><div class="slot-body"><b>抵贵阳北</b>，出站的士/网约车直接打表去<b>云岩区陕西路—飞山街商圈</b>的酒店（见「住宿」）。约 23:50 到店放行李，轻装出门。</div></div>
+        <div class="slot"><div class="slot-time">24:00</div><div class="slot-body"><b>宵夜（夜宵）· 主目标：夜夜香板筋盖饭</b>（陕西路 23 号，多源交叉实证营业至<b>凌晨 3 点</b>，深夜到店大概率还开着）：板筋盖饭小份 20 / 大份 25，本地人「多要板筋少要饭」是标准暗号。<br>第二目标（随缘，深夜是否出摊未核实）：<b>刘三妹烤脑花</b>（陕西路 88 号，莲花白包烤脑花 15/份、掌中宝）与 <b>三口百味烤鸡</b>（陕西路×黔灵东路口，炒鸡血本地公认第一，约 30/份）。三家相隔都在几百米内，走到哪家吃哪家。<br><b>兜底：</b>都收摊了就找还亮灯的牛肉粉/肠旺面馆（贵阳粉馆作息很野）【未核实】，或便利店对付——10-24（周六）07:30 有正经早餐。</div></div>
+        <div class="warn-line"><b>避雷：</b>①老攻略里的「青云路夜市」2019 年起已退街入室，别按旧文找街边摊；②二七路小吃街营业到 24:00 且街内统一刷卡充值消费，深夜到达不适合；③陕西路个别摊有宰客史，坐定前看清价目。</div>
+        <div class="note-row photo"><span class="ic">📷</span><div><b>今日机位：</b>📷 位置：陕西路霓虹街口｜时段：00:00-01:00｜拍法：手机夜景模式竖构图，人坐矮桌烟火气入镜，不追求出片——今晚任务是吃。</div></div>
+        <div class="note-row"><span class="ic">🛏</span><div>住：陕西路—飞山街商圈连锁（详见「住宿」区块）；<b>Plan B：</b>若末班高铁延误超 00:30 才到酒店，砍掉第二目标直奔板筋盖饭，01:30 前回酒店睡觉，保住周六（10-24）爬山体力。</div></div>
+        <div class="note-row"><span class="ic">💡</span><div><b>你知道吗：</b>贵阳是全国「烙锅之都」之外的隐形脑花消费大市——烤脑花从四川传入后在贵阳夜市发扬光大，莲花白（卷心菜）叶包着铁板烤是贵阳独有做法，菜香去腥提鲜。</div></div>
+      </div>
+    </section>
+
+    <section id="day2">
+      <div class="day">
+        <div class="day-head"><span class="day-idx">DAY 2 · 10-24 周六</span><h3>黔灵山全览 · 老城觅食</h3><span class="today-badge"><span class="dot"></span>当日</span></div>
+        <div class="note-row"><span class="ic">🧭</span><div><b>今日速览：</b>上午=黔灵山南门进索道上山走经典全览线；下午=飞山街丝娃娃+老城街区漫步；晚上=省府路酸汤鱼+甲秀楼夜景。</div></div>
+        <div class="photos">
+          <figure><svg viewBox="0 0 300 200" width="100%" role="img" aria-label="黔灵山环线示意"><rect width="300" height="200" fill="#E6EEE8"/><path d="M60 170 C40 120 80 60 150 50 C220 60 250 120 220 170 Z" fill="none" stroke="#2F5D43" stroke-width="4"/><circle cx="150" cy="50" r="8" fill="#b5493a"/><circle cx="60" cy="170" r="8" fill="#2F5D43"/><circle cx="220" cy="170" r="8" fill="#2F5D43"/><text x="125" y="35" font-size="13" fill="#1C1B17">瞰筑亭/弘福寺</text><text x="20" y="190" font-size="13" fill="#1C1B17">南门进</text><text x="190" y="190" font-size="13" fill="#1C1B17">黔灵湖出</text></svg><figcaption>黔灵山经典全览环线（示意 · 自绘 SVG，非等比例）</figcaption></figure>
+          <figure><svg viewBox="0 0 300 200" width="100%" role="img" aria-label="丝娃娃示意"><rect width="300" height="200" fill="#F3EEDF"/><circle cx="90" cy="110" r="38" fill="#FCFBF7" stroke="#E3DFD3"/><circle cx="170" cy="110" r="38" fill="#E6EEE8" stroke="#E3DFD3"/><circle cx="250" cy="110" r="38" fill="#FCFBF7" stroke="#E3DFD3"/><text x="70" y="40" font-size="14" fill="#1C1B17">丝娃娃 · 十余素菜丝</text><text x="95" y="190" font-size="12" fill="#5C594E">薄饼+酸酸辣辣蘸水</text></svg><figcaption>杨姨妈丝娃娃吃法（示意 · 自绘 SVG，非等比例）</figcaption></figure>
+        </div>
+        <div class="slot"><div class="slot-time">07:30</div><div class="slot-body"><b>早餐：</b>酒店附近粉馆——肠旺面或花溪牛肉粉开场（人均 10~15），本地人早餐就这么吃【未核实】——按住宿选步行可达的排队粉馆即可。</div></div>
+        <div class="slot"><div class="slot-time">08:00</div><div class="slot-body"><b>黔灵山公园南门进</b>（打车约 10 元/地铁 3 号线黔灵山公园站 C 口）。<b>已预约凭证=身份证，直接刷证入园。</b>经典全览线（官方推荐，南门进不走回头路）：三岭湾猕猴观赏区 → <b>索道上山（单程 20 元，只买上行）</b> → 瞰筑亭看全城 → 弘福寺 → 步行九曲径下山 → 麒麟洞 → 黔灵湖环湖 → 南门出。全程约 3.5~4 小时。</div></div>
+        <div class="slot"><div class="slot-time">12:30</div><div class="slot-body"><b>午餐 · 杨姨妈丝娃娃</b>（飞山街 214-2 号）：本地人从小吃到大的老字号，常年排队，人均 30~40。两人大胃王局加一份脆哨收尾（丁家脆哨同在民生路步行圈）。</div></div>
+        <div class="slot"><div class="slot-time">14:30</div><div class="slot-body">老城自由段：飞山街 → 民生路 → 文昌阁 → 甲秀楼白天踩点（三个点都在步行圈，不赶时间，累了咖啡馆坐）。<b>Plan B（雨天方案）：</b>若下大雨，改贵州省地质博物馆（地铁 1 号线，免费需预约【预约余量未核实】）或直接提前进酸汤鱼店。</div></div>
+        <div class="slot"><div class="slot-time">18:30</div><div class="slot-body"><b>晚餐 · 老凯俚酸汤鱼</b>（云岩区省府路石板街 12 号）：贵阳本土老字号（非外地连锁），红酸汤加木姜子油，本地人请客常去，人均 100~150。黄辣丁按锅点，蘸水是灵魂。</div></div>
+        <div class="slot"><div class="slot-time">20:00</div><div class="slot-body"><b>甲秀楼夜景</b>：打车或步行（视体力），南明河两岸是市区最出片夜景位。亮灯时间约天黑后（18:30 日落，19:30 前后全亮【未核实精确时刻】）。回酒店路上顺路再补烤脑花。</div></div>
+        <div class="warn-line"><b>避雷：</b>①黔灵山猕猴会抢塑料袋/手里食物，别逗猴翻包，饮料别挂包外；②周六 9:00-11:00 索道排队可超 30 分钟——8 点前到南门是核心解法；③索道只买上行，下山走九曲径沿路看猴逛寺更值；④酸汤鱼店门口拉客推荐的「分店/合作店」一律不去。</div>
+        <div class="note-row photo"><span class="ic">📷</span><div><b>今日机位：</b>📷 位置：瞰筑亭（索道站出来即达）｜时段：09:00-10:00 侧光｜拍法：广角俯拍城区+山体同框，阴天通透度一般，重点拍人与亭合影。📷 位置：甲秀楼浮玉桥西侧桥头｜时段：19:30-20:30 蓝调时刻｜拍法：夜景模式对楼体，水面倒影入镜。</div></div>
+        <div class="note-row"><span class="ic">🛏</span><div>住：同 Day1（不用挪窝）。<b>Plan B：</b>体力崩了就砍 14:30 自由段，回酒店午休到 17:30 再出门吃酸汤鱼——行程完成度=全队最低体力者。</div></div>
+        <div class="note-row"><span class="ic">💡</span><div><b>你知道吗：</b>弘福寺是贵州佛教四大丛林之一，康熙十一年（1672）由禅宗高僧赤松和尚创建；黔灵山「黔南第一山」的名号与乾隆下江南无关——是文人题刻捧出来的。</div></div>
+      </div>
+    </section>
+
+    <section id="day3">
+      <div class="day">
+        <div class="day-head"><span class="day-idx">DAY 3 · 10-25 周日</span><h3>青岩 + 天河潭 · 顺路回北站</h3><span class="today-badge"><span class="dot"></span>当日</span></div>
+        <div class="note-row"><span class="ic">🧭</span><div><b>今日速览：</b>上午=青岩古镇南门进逛城墙背街；中午=金必轩状元蹄；下午=天河潭水洞游船；16:00 准时打车回贵阳北赶 17:30 高铁。</div></div>
+        <div class="photos">
+          <figure><svg viewBox="0 0 300 200" width="100%" role="img" aria-label="青岩路线示意"><rect width="300" height="200" fill="#E6EEE8"/><path d="M50 180 L80 110 L140 80 L220 90 L260 60" stroke="#8A8677" stroke-width="5" fill="none"/><circle cx="50" cy="180" r="8" fill="#2F5D43"/><circle cx="140" cy="80" r="8" fill="#b5493a"/><circle cx="260" cy="60" r="8" fill="#c8a45c"/><text x="20" y="160" font-size="13" fill="#1C1B17">南门</text><text x="115" y="65" font-size="13" fill="#1C1B17">定广门城墙</text><text x="215" y="45" font-size="13" fill="#1C1B17">北门金必轩</text></svg><figcaption>青岩南门进→城墙→背街→北门午餐（示意 · 自绘 SVG，非等比例）</figcaption></figure>
+          <figure><svg viewBox="0 0 300 200" width="100%" role="img" aria-label="水洞游船示意"><rect width="300" height="200" fill="#F7F5F0"/><path d="M20 60 Q80 20 150 45 T280 40 L280 90 Q200 130 120 110 T20 120 Z" fill="#E6EEE8" stroke="#2F5D43" stroke-width="3"/><path d="M40 150 Q150 135 260 160" stroke="#c8a45c" stroke-width="4" fill="none"/><text x="60" y="30" font-size="13" fill="#1C1B17">水洞暗河 1200 米</text><text x="95" y="185" font-size="13" fill="#1C1B17">乘船线</text></svg><figcaption>天河潭水洞游船段（示意 · 自绘 SVG，非等比例）</figcaption></figure>
+        </div>
+        <div class="slot"><div class="slot-time">07:00</div><div class="slot-body"><b>早餐：</b>退房前酒店附近粉馆解决（酒店含早按含早算，写清楚：订房时确认含早与否）；行李全部带上车。</div></div>
+        <div class="slot"><div class="slot-time">07:30</div><div class="slot-body"><b>打车进花溪方向</b>（约 29~33km，40~50 分钟，60~80 元/车），直奔<b>青岩古镇南门停车场</b>。⚠️ 别从北门进——北门进要买 20 元/人观光车票，官方口径很鸡肋；南门进出顺动线。</div></div>
+        <div class="slot"><div class="slot-time">08:30</div><div class="slot-body"><b>青岩古镇</b>（08:10 开门，上午 9 点前人少光线柔）：南门 → 定广门登城墙俯瞰全镇 → 背街石板巷（《寻枪》取景地） → 状元府周边 → 往北门穿明清街。文物小景点 17:40 关闭与本行程无冲突。<b>门票：</b>逛街区+城墙外围 10 元/人够用；要登定广门城墙+进状元府等文物点+看四大实景演艺，买 60 元联票（口径见「门票」）。取舍建议：想看城墙就上 60，纯逛巷子拍照 10 元足够。</div></div>
+        <div class="slot"><div class="slot-time">12:00</div><div class="slot-body"><b>午餐 · 金必轩</b>（北门北明清街 57 号）：青岩猪脚（状元蹄）多源公认第一的老店，院内带假山花园，28~35 元/斤，配一碗<b>糕粑稀饭</b>（老牌是谢家）+ 玫瑰冰粉或豆腐圆子。<b>Plan B（雨天方案）：</b>青岩若遇雨，石板巷反而出片，改室内串联——城墙跳过、直奔金必轩，剩的时间给天河潭照旧。</div></div>
+        <div class="slot"><div class="slot-time">13:10</div><div class="slot-body">打车<b>青岩 → 天河潭</b>（约 15km，20~30 分钟，约 30 元/车）。</div></div>
+        <div class="slot"><div class="slot-time">13:40</div><div class="slot-body"><b>天河潭</b>（旺季至 18:00，17:30 停止售票——13:40 入园时间充裕但不再加项）：检票后<b>观光车直达核心区</b> → <b>水洞游船 1200 米</b>（钟乳石灯光，全园精华，不可砍） → 旱洞（湿滑台阶，量力） → 山水瀑布外景 → 出。<b>压缩开关：</b>若青岩拖了 40 分钟以上，只坐船+瀑布，砍旱洞。</div></div>
+        <div class="slot"><div class="slot-time">16:00</div><div class="slot-body"><b>晚餐 · 路餐（高铁上解决）：</b>上车前在贵阳北站买盒饭/卤味当晚餐，16:45 前抵达进站。<b>交通：</b>天河潭门口打车 → 贵阳北（约 30km，30~40 分钟，约 60 元/车）。⚠️ <b>16:30 是最后红线</b>：16:30 还没上出租车立刻改走地铁预案（S1 天河潭站 A1 口进站）。地铁理论可行但带行李全程 1 小时+零容错——首选打车。</div></div>
+        <div class="warn-line"><b>避雷：</b>①青岩主街每 10 米一家猪脚店，认准北门金必轩/老字号，别被门口拉客的「百年老店」话术带偏；②天河潭内餐饮又贵又差，出门前在车上备水零食；③洞内恒温偏凉路滑，运动鞋+别穿拖鞋；④周五晚到筑前别把天河潭票买在周六——退票规则各平台不一【未核实】，周日入园就周日买。</div>
+        <div class="note-row photo"><span class="ic">📷</span><div><b>今日机位：</b>📷 位置：定广门城墙段｜时段：09:00-10:00 顺光｜拍法：俯拍全镇黑瓦石墙做背景人像。📷 位置：水洞游船船头｜时段：全天洞内灯光｜拍法：手机贴暗河水面低角度仰拍钟乳石，开闪光会糊在岩壁上，关闪光稳。</div></div>
+        <div class="note-row"><span class="ic">🛏</span><div>住：无（当晚高铁离筑）。<b>当日交通：</b>全程打车三腿（酒店→青岩→天河潭→北站），合计约 150~170 元/车，两车拼一车可省。</div></div>
+        <div class="note-row"><span class="ic">💡</span><div><b>你知道吗：</b>青岩「状元蹄」得名于清光绪年间贵州首位状元赵以炯——相传他爱吃蹄花，如今家家猪脚店抢挂「状元」二字；背街的石板路是当年盐茶古道原物。</div></div>
+      </div>
+    </section>
+
+    <section id="boost">
+      <div class="eyebrow">备选 · 想多玩这样加</div>
+      <h2>可选 · 更从容</h2>
+      <div class="card">⏰ <b>花溪公园</b>（黄金大道）——10 月下旬到 11 月初银杏金黄正当季：周六下午自由段体力好，可从飞山街打车 25 分钟过去替代文昌阁漫步【观赏窗口未核实】，到筑后问酒店前台。</div>
+      <div class="card">🏮 <b>青云市集</b>——青云路「退街入室」后的室内版，周五夜宵第二现场兜底：雷家豆腐圆子、但家香酥鸭、王记珍珍水果豆花都在这（营业时间至深夜几点未核实）。</div>
+      <div class="card">🌃 <b>白宫（花果园艺术中心）夜景</b>——本地人拍照打卡的「民间白宫」，甲秀楼拍完意犹未尽可顺路外围观一眼。</div>
+      <div class="card">🖼 <b>贵州省地质博物馆</b>——恐龙化石+海百合，免费需预约，雨天硬备份首选。</div>
+      <div class="warn-line">以上全部是「时间富余才碰」项，主线三景点+发车节点没守住之前，一个都不许加。</div>
+    </section>
+
+    <section id="ticket">
+      <div class="eyebrow">门票 · 预约</div>
+      <h2>进门花多少</h2>
+      <table class="tb">
+        <colgroup><col style="width:22%"><col style="width:40%"><col style="width:38%"></colgroup>
+        <tr><th>项目</th><th>价格（2026-10-21 实查口径）</th><th>预约/时点要点</th></tr>
+        <tr><td><b>黔灵山公园</b></td><td>大门免费；索道上行 20 / 下行 15 / 往返 30</td><td>🔴必办：贵客荟小程序或公园公众号实名预约 10-24 入园，刷身份证进；开放 07:00-20:00（19:30 停止入园）</td></tr>
+        <tr><td><b>青岩古镇</b></td><td>入镇票 10；全域联票 60（含城墙/状元府/慈云寺等文物点+四大实景演艺）</td><td>古镇街区 08:10-22:00，文物点 08:10-17:40；本行程 08:30 入园。网传免票年龄口径两版打架，以现场公示为准：0851-83200470</td></tr>
+        <tr><td><b>天河潭</b></td><td>通票+往返观光车约 75（携程/官方口径 75~80，含不含观光车各平台说法不一，下单时看清明细）；单项：外景 10、水洞船票 43、观光车 30</td><td>旺季 08:30-18:00，🔴17:30 停止售票；提前一晚线上买，现场只留应急</td></tr>
+        <tr><td><b>甲秀楼</b></td><td>外观免费（登楼开放情况未核实）</td><td>夜景看亮灯，无需预约</td></tr>
+      </table>
+      <p style="font-size:.78rem;color:var(--ink3);margin-top:10px">比价指引：门票按当前询问时间实时检索为准——官方公众号/小程序 &gt; 官方 App &gt; OTA（携程/美团）&gt; 攻略帖只当线索；不同渠道挂的档期票价可能不同，比对好日期再下单。</p>
+    </section>
+
+    <section id="tips">
+      <div class="eyebrow">真实场景 · 提前知道</div>
+      <h2>心里有数</h2>
+      <div class="tips">
+        <div class="tip"><div><b>黔灵山猴子是泼猴。</b>塑料袋、饮料、翻包行为都会触发抢夺。背双肩包拉好拉链，食物全部进包内。孩子逗猴被抢新闻年年有，成年人也一样。</div></div>
+        <div class="tip"><div><b>索道排队高峰 9:00-11:00</b>，周六可排 30 分钟+。8 点前到南门=直接跳过这个坑。</div></div>
+        <div class="tip"><div><b>雨天方案：</b>周日两源预报打架（55% 小雨概率档）。小雨照跑：青岩雨中石板巷反而出片、天河潭主体在洞里；大雨砍城墙段、青岩直进金必轩，地质博物馆顶上来做硬备份。</div></div>
+        <div class="tip"><div><b>酸汤 ≠ 辣汤。</b>红酸汤是毛辣果发酵的酸，辣是蘸水的事。怕酸先小口，蘸水里的折耳根接受不了就不搅进汤里。</div></div>
+        <div class="tip"><div><b>深夜到达的现实：</b>23:30 到站+出站+到酒店≈00:15，夜宵主押夜夜香（营业至凌晨 3 点多源实证），另两家深夜出摊情况未核实——预期管理做好，扑空就粉馆兜底，别为找店耗掉睡眠。</div></div>
+        <div class="tip"><div><b>周日时间就是生命线。</b>16:00 天河潭上车是硬节点；青岩逛嗨了会直接威胁 17:30 高铁，定好闹钟。</div></div>
+        <div class="tip"><div><b>拍摄参数速查卡：</b>夜景（甲秀楼/陕西路）：iPhone 原生夜景模式自动，安卓开「超级夜景」持机 3~5 秒；洞内（水洞游船）：关闪光，ISO 自动+贴水面低角度，船动会糊——船工喊停再拍；白天全景（瞰筑亭）：0.5x 广角端收山+城同框；两人互相拍，每人 ≥3 张有人像再走。</div></div>
+      </div>
+    </section>
+
+    <section id="stay">
+      <div class="eyebrow">住宿</div>
+      <h2>住宿：订哪里（两晚同店，10-23、10-24 各一晚）</h2>
+      <div class="card"><b>选址锚点：</b>云岩区<b>陕西路—飞山街—永青路一带（喷水池/云岩广场商圈）</b>。理由：①周五深夜到站 15 分钟直达夜宵主战场；②周六丝娃娃/酸汤鱼/民生路全在步行圈；③周日向南出发打车顺路。<b>要求：电梯房、房间背街不临陕西路正街（酒吧街深夜吵）。</b></div>
+      <table class="tb">
+        <colgroup><col style="width:30%"><col style="width:40%"><col style="width:30%"></colgroup>
+        <tr><th>档次</th><th>落脚点（携程/美团搜「陕西路」或「喷水池」圈选）</th><th>参考价/晚【估算】</th></tr>
+        <tr><td><b>经济连锁</b></td><td>汉庭 / 如家 / 7天 云岩广场-喷水池店</td><td>130~180 元</td></tr>
+        <tr><td><b>舒适连锁</b>（推荐）</td><td>全季 / 桔子 / 维也纳 喷水池-友谊路沿线</td><td>200~280 元</td></tr>
+        <tr><td><b>本地特色</b></td><td>老城民宿（飞山街周边）</td><td>180~300 元，隔音质量参差，慎选</td></tr>
+      </table>
+      <p style="font-size:.78rem;color:var(--ink3);margin-top:10px">具体店名实时价格未逐店核实，以上为档位口径；订房三问：①今晚有房+电梯 ②能否延迟到 00:30 后入住（深夜到站必须问！）③是否含早。两晚同店不挪窝。</p>
+    </section>
+
+    <section id="cost">
+      <div class="eyebrow">预算</div>
+      <h2>钱（人均，不含住宿与往返高铁票）</h2>
+      <div class="stats">
+        <div class="stat"><div class="n">430~</div><div class="l">人均总盘（元，区间 430~480）</div></div>
+        <div class="stat"><div class="n">105+</div><div class="l">门票+索道（元，联票则 155）</div></div>
+        <div class="stat"><div class="n">≈105</div><div class="l">市内打车分摊（元/人）</div></div>
+      </div>
+      <table class="tb">
+        <colgroup><col style="width:30%"><col style="width:40%"><col style="width:30%"></colgroup>
+        <tr><th>项</th><th>明细</th><th>金额（元）</th></tr>
+        <tr><td><b>黔灵山</b></td><td>大门 0 + 索道上行 20</td><td>20</td></tr>
+        <tr><td><b>青岩</b></td><td>入镇票 10（买联票则 60）</td><td>10~60</td></tr>
+        <tr><td><b>天河潭</b></td><td>通票+观光车套票</td><td>75~80</td></tr>
+        <tr><td><b>餐</b></td><td>夜宵 30 + 周六（丝娃娃 40+酸汤鱼 60~75 分摊）+ 周日（金必轩 40 + 粉面 15）</td><td>≈220</td></tr>
+        <tr><td><b>市内打车</b></td><td>两天全部段合计 ≈210/人摊（两车拼一车可压到 160）</td><td>105~160</td></tr>
+        <tr><td><b>隐藏成本行</b></td><td>停车场费（青岩南门 ≈10~15/次）、景区保险搭售（下单时记得取消勾选）、饮料零食、贵州观光巴士/临时改打车加价</td><td>预留 30~50</td></tr>
+      </table>
+      <p style="font-size:.78rem;color:var(--ink3);margin-top:10px">诚实口径：夜宵/餐价为多源攻略价，实际以到店菜单为准；酸汤鱼放开点鱼放开吃，人均 +50。</p>
+    </section>
+
+    <section id="sos">
+      <div class="eyebrow">应急</div>
+      <h2>应急 Plan B 一览</h2>
+      <div class="sos-grid">
+        <div class="sos"><h4>🚄 误车风险</h4><p>周日 16:30 还没上出租车→立即地铁预案：步行/打车到 S1 线天河潭站 A1 口，换乘往贵阳北方向（S1→1 号线约 1 小时，末班 23:00 无压力但有误车风险）；同时改签 12306 候补下一班。</p></div>
+        <div class="sos"><h4>🌧 大雨</h4><p>砍青岩城墙段改吃+巷内穿堂；天河潭照玩（主体在洞内）；周六大雨则黔灵山改贵州省地质博物馆+青云市集室内线。</p></div>
+        <div class="sos"><h4>🎫 约满/售罄</h4><p>黔灵山预约若满：改周日 07:00 直接南门碰运气现场扫码【未核实余量机制】，或砍黔灵山把周六给青岩天河潭（周日提前一天走，动线重排代价最小）。</p></div>
+        <div class="sos"><h4>🏥 医疗兜底</h4><p>贵阳市人民医院（头桥院区，云岩区新盐街，离住宿圈 2km）/ 贵州省人民医院（南明区中山东路）；急诊 120。酸汤辣肠胃不适：白天多喝温水，随身备一盒常用止泻药。</p></div>
+      </div>
+    </section>
+
+    <section id="eat">
+      <div class="eyebrow">照着吃就行</div>
+      <h2>美食清单（排序=行程时间线）</h2>
+      <table class="tb">
+        <colgroup><col style="width:14%"><col style="width:32%"><col style="width:32%"><col style="width:22%"></colgroup>
+        <tr><th>餐次</th><th>主推</th><th>备选</th><th>口径</th></tr>
+        <tr><td><b>宵夜</b> · 随意</td><td>夜夜香板筋盖饭（陕西路 23 号，至凌晨 3 点）</td><td>刘三妹烤脑花（陕西路 88 号）· 三口百味烤鸡（陕西路口）</td><td>营业时间未逐店核实，深夜到筑先吃押得着的那家</td></tr>
+        <tr><td><b>早餐</b> · 随意</td><td>住宿圈肠旺面馆（本地人早点标配）</td><td>花溪王记牛肉粉类粉馆（找门口坐满本地人的进）</td><td>人均 10~15</td></tr>
+        <tr><td><b>Day2 午餐</b></td><td>杨姨妈丝娃娃 · 飞山街 214-2 号（人均 30~40）</td><td>新凯里酸汤鱼 · 飞山街中段（同街换口味备选）</td><td>排队高峰 12:30-13:30，11:45 到可跳过</td></tr>
+        <tr><td><b>Day2 晚餐</b></td><td>老凯俚酸汤鱼 · 省府路石板街 12 号（人均 100~150）</td><td>亮欢寨酸汤鱼 · 曹状元街 6 号（备选）</td><td>一家主打鱼两案吃</td></tr>
+        <tr><td><b>Day3 午餐</b></td><td>金必轩 · 青岩北门北明清街 57 号（状元蹄 28~35 元/斤）</td><td>王万妈卤猪脚（古镇外围，排队短备选）</td><td>配糕粑稀饭（谢家）/玫瑰冰粉</td></tr>
+        <tr><td><b>Day3 晚餐</b></td><td>高铁上解决：发车前在贵阳北站买盒饭/周黑鸭式卤味上车</td><td>站内连锁快餐（17:30 发车留的缓冲短，提前买好）</td><td>正餐必须有行——今晚就是路餐</td></tr>
+        <tr><td><b>下午茶</b></td><td>老城咖啡：飞山街民生路步行圈独立咖啡馆任选（14:30 自由段）</td><td>但家香酥鸭/雷家豆腐圆子当下午茶（青云市集）</td><td>贵阳非咖啡名城，推有品味的而非名店</td></tr>
+      </table>
+      <div class="card"><b>升级体验（丰俭由人）：</b>①老凯俚酸汤鱼加一条江团（比草鱼贵 40~60，肉质无刺，两人吃着更爽）②金必轩点蹄髈整只装+双花醋解腻，别单论斤切③夜宵加一份烙锅当硬菜（贵阳烙锅发源地体验，10~30 元/锅）。三家都够格，全上则人均预算 +60~80。</div>
+      <div class="warn-line">连锁/网红店一律未收：本地人口径优先，全国连锁与纯流量探店店已按收录门槛过滤（单源不录）。</div>
+    </section>
+
+    <section id="gift">
+      <div class="eyebrow">特产 · 带一份回家</div>
+      <h2>回来带点啥</h2>
+      <table class="tb">
+        <colgroup><col style="width:26%"><col style="width:50%"><col style="width:24%"></colgroup>
+        <tr><th>特产</th><th>怎么买</th><th>参考</th></tr>
+        <tr><td><b>丁家脆哨</b></td><td>民生路本店真空装，车上零食+回家下面都香</td><td>20~30 元/包【估算】</td></tr>
+        <tr><td><b>老干妈系之外的辣三味</b>（油辣椒/糟辣椒）</td><td>大型超市本地品牌区（贵阳本地超市最便宜），别在古镇里买分装</td><td>10~20 元/瓶</td></tr>
+        <tr><td><b>都匀毛尖/湄潭翠芽</b></td><td>茶叶店试喝再买，云岩区老字号茶庄；高铁站价高</td><td>口粮档 100~200/斤</td></tr>
+        <tr><td><b>玫瑰糖/青岩糕粑料</b></td><td>青岩现场看哪家现做买哪家</td><td>10~25 元</td></tr>
+      </table>
+      <div class="warn-line"><b>别在景点门口买：</b>青岩北门外「银饰/苗药」摊与古镇内分装真空猪脚礼盒性价比差，直接pass；带走猪脚=现场啃完最香。</div>
+    </section>
+    <div style="height:96px" class="tailpad" aria-hidden="true"></div>
+<footer style="padding:64px 0 80px;text-align:center">
+  <h2>贵阳路书 · 三天两夜周末版</h2>
+  <p>出发地外地高铁抵筑 · 2026-10-23 至 10-25 · 2 人同行<br>本地单文件 · 无外部依赖 · 断网可打开<br>信息 2026-10-21 联网实查 · 未核实项已标注</p>
+  <p>配图说明：全部 6 张为自绘 SVG 示意，非当地实景照片；无 Pexels 密钥，按备用合规通道执行。</p>
+  <p>自绘示意均为非等比例示意图，仅供动线印象参考。</p>
+  <p style="margin-top:18px;font-weight:700">方案仅供参考——安全和开心，才是最重要的。🌕</p>
+</footer>
+  </div>
+</main>
+<button class="backtop" id="backtop" aria-label="回到顶部">↑</button>
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- 1. 当日模式：按日期高亮对应行程日 ---------- */
+  var TRIP = { "2026-10-23":"day1", "2026-10-24":"day2", "2026-10-25":"day3" };
+  function todayStr(){
+    var d = new Date();
+    var m = ("0"+(d.getMonth()+1)).slice(-2), day = ("0"+d.getDate()).slice(-2);
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  var todayId = TRIP[todayStr()];
+  if (todayId){
+    var sec = document.getElementById(todayId);
+    if (sec){
+      var card = sec.querySelector(".day");
+      if (card) card.classList.add("today");
+      function jumpToday(){ lockNav(todayId); sec.scrollIntoView({behavior:"instant", block:"start"}); }
+      /* 布局稳定后再跳（固定 600ms 会撞上 SVG/字体重排，落点漂移一整个区块——东京版实测） */
+      if (document.readyState === "complete"){ setTimeout(jumpToday, 300); }
+      else { window.addEventListener("load", function(){ setTimeout(jumpToday, 300); }); }
+    }
+  } else {
+    var prep = document.getElementById("prepCard");
+    if (prep && todayStr() < "2026-10-23") prep.style.border = "2px solid var(--accent)";
+  }
+
+  /* ---------- 2. 字号三档（记忆） ---------- */
+  var FONTS = ["17px","19px","21px"];
+  var fi = 1;
+  try { fi = Math.max(0, Math.min(2, parseInt(localStorage.getItem("gy_font")||"1",10)||0)); } catch(e){}
+  function applyFont(){ document.documentElement.style.setProperty("--fs", FONTS[fi]); }
+  applyFont();
+  function saveFont(){ try{ localStorage.setItem("gy_font", String(fi)); }catch(e){} }
+  document.getElementById("fontInc").addEventListener("click", function(){ if(fi<2){fi++;applyFont();saveFont();} });
+  document.getElementById("fontDec").addEventListener("click", function(){ if(fi>0){fi--;applyFont();saveFont();} });
+
+  /* ---------- 3. 打印 ---------- */
+  document.getElementById("printBtn").addEventListener("click", function(){ window.print(); });
+
+  /* ---------- 4. 勾选清单（记忆） ---------- */
+  document.querySelectorAll(".check li").forEach(function(li, i){
+    var box = li.querySelector("input");
+    var key = "gy_chk_" + box.id;
+    try { box.checked = localStorage.getItem(key) === "1"; } catch(e){}
+    if (box.checked) li.classList.add("done");
+    li.addEventListener("click", function(ev){
+      if (ev.target.tagName !== "INPUT"){ box.checked = !box.checked; }
+      li.classList.toggle("done", box.checked);
+      try{ localStorage.setItem(key, box.checked ? "1" : "0"); }catch(e){}
+    });
+  });
+
+  /* ---------- 5. 滚动监听：侧栏高亮 + 入场动效 ----------
+     高亮双通道：滚动 = 贴顶窄带 observer（12%~22%，短区块也顺序逐个亮）；
+     点击/当日跳转 = navLock 目标锁（点哪亮哪，平滑滚动途中不闪跳）。 */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll(".side nav a"));
+  var secs = Array.prototype.slice.call(document.querySelectorAll("main section"));
+  var navLock = null, lockTimer = null;
+  function setOn(id){
+    navLinks.forEach(function(a){ a.classList.toggle("on", a.getAttribute("href") === "#"+id); });
+  }
+  function lockNav(id){
+    navLock = id; setOn(id);
+    if (lockTimer) clearTimeout(lockTimer);
+    lockTimer = setTimeout(function(){ navLock = null; }, 1200);
+  }
+  navLinks.forEach(function(a){
+    a.addEventListener("click", function(){ lockNav((a.getAttribute("href") || "").slice(1)); });
+  });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting){
+        en.target.classList.add("in");
+        if (!navLock) setOn(en.target.id);
+      }
+    });
+  }, { rootMargin: "-12% 0px -78% 0px" });
+  secs.forEach(function(s){ io.observe(s); });
+
+  /* ---------- 6. 返回顶部 ---------- */
+  var bt = document.getElementById("backtop");
+  window.addEventListener("scroll", function(){
+    bt.classList.toggle("show", window.scrollY > 600);
+  }, { passive:true });
+  bt.addEventListener("click", function(){ window.scrollTo({ top:0, behavior:"smooth" }); });
+})();
+</script>
+<script>
+/* 兜底：若上方脚本报错导致入场动效未初始化，3 秒后强制显示全部内容 */
+setTimeout(function(){
+  if (!document.querySelector('main section.in')){
+    document.querySelectorAll('main section').forEach(function(s){ s.classList.add('in'); });
+  }
+}, 3000);
+</script>
+</body>
+</html>
