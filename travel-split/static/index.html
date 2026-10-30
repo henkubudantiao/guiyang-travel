@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#3b5bdb">
+<title>旅行 AA 记账</title>
+<style>
+:root{
+  --bg:#f2f5fb; --card:#ffffff; --ink:#1d2433; --sub:#6b7690; --line:#e7ebf4;
+  --brand:#3b5bdb; --brand2:#4dabf7; --green:#0ca678; --red:#e03131; --orange:#f08c00;
+  --shadow:0 2px 10px rgba(30,50,90,.07), 0 8px 28px rgba(30,50,90,.06);
+  --r:16px;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink); min-height:100dvh;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
+  padding-bottom:96px;
+}
+.wrap{max-width:560px;margin:0 auto;padding:0 14px}
+
+/* ---------- header ---------- */
+.hero{
+  background:linear-gradient(135deg,#3b5bdb 0%,#4dabf7 60%,#38d9a9 130%);
+  color:#fff;border-radius:0 0 26px 26px;padding:16px 0 18px;
+  box-shadow:0 10px 30px rgba(59,91,219,.28);
+}
+.hero .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.trip{font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;min-width:0}
+.trip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rename{background:rgba(255,255,255,.18);border:none;color:#fff;border-radius:10px;
+  font-size:12px;padding:6px 10px;flex:none}
+.hero-main{margin-top:13px}
+.hero-main .k{font-size:11px;opacity:.8;letter-spacing:1px}
+.hero-main .big{font-size:clamp(31px,8.6vw,44px);font-weight:800;line-height:1.15;margin-top:2px;
+  font-variant-numeric:tabular-nums;text-shadow:0 2px 10px rgba(20,40,120,.18);white-space:nowrap}
+.hero-main .big small{font-size:clamp(13px,3.6vw,16px);font-weight:600;opacity:.85;margin-left:6px}
+.mini-row{display:flex;margin-top:11px;background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.22);border-radius:14px;backdrop-filter:blur(4px);overflow:hidden}
+.mini-cell{flex:1;padding:8px 2px 7px;text-align:center;position:relative;min-width:0}
+.mini-cell+.mini-cell::before{content:"";position:absolute;left:0;top:18%;height:64%;
+  width:1px;background:rgba(255,255,255,.28)}
+.mini-cell b{display:block;font-size:clamp(13px,3.7vw,15px);font-weight:800;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.mini-cell i{display:block;font-size:10px;opacity:.75;font-style:normal;margin-top:1px;white-space:nowrap}
+
+/* ---------- trip switcher ---------- */
+.tripbar{display:flex;gap:8px;overflow-x:auto;padding:12px 14px 2px;scrollbar-width:none}
+.tripbar::-webkit-scrollbar{display:none}
+.tchip{flex:none;display:flex;align-items:center;gap:7px;border:1.5px solid var(--line);
+  background:var(--card);border-radius:12px;padding:8px 12px;font-size:13px;cursor:pointer;
+  box-shadow:var(--shadow);white-space:nowrap}
+.tchip .dot{width:8px;height:8px;border-radius:50%;background:#c8d0e0;flex:none}
+.tchip.sel{border-color:var(--brand);background:linear-gradient(135deg,#eef3ff,#e7f5ff);
+  color:var(--brand);font-weight:700}
+.tchip.sel .dot{background:var(--brand)}
+.tchip .sm{font-size:10px;color:var(--sub);font-weight:400}
+.tchip.sel .sm{color:#5b78d8}
+.tchip.new{border-style:dashed;color:var(--brand);font-weight:600;background:#fbfcff}
+
+/* ---------- cards ---------- */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);
+  padding:14px;margin-top:14px}
+.card h3{margin:0 0 10px;font-size:14px;color:var(--sub);font-weight:600;
+  display:flex;align-items:center;justify-content:space-between}
+.card h3 .hint{font-size:11px;font-weight:400}
+
+/* people */
+.pgrid{display:flex;flex-wrap:wrap;gap:8px}
+.pchip{display:flex;align-items:center;gap:8px;background:#f6f8fd;border:1px solid var(--line);
+  border-radius:12px;padding:8px 10px;font-size:13px}
+.avatar{width:30px;height:30px;border-radius:50%;color:#fff;display:flex;align-items:center;
+  justify-content:center;font-weight:700;font-size:14px;flex:none}
+.pchip b{font-variant-numeric:tabular-nums}
+.pchip .bal{font-size:11px;margin-left:2px}
+.pchip .bal.pos{color:var(--green)} .pchip .bal.neg{color:var(--red)} .pchip .bal.zero{color:var(--sub)}
+.pdel{border:none;background:none;color:#b3bccd;font-size:15px;cursor:pointer;padding:2px 4px}
+.addp{display:flex;gap:8px;margin-top:10px}
+.addp input{flex:1}
+
+/* settlement */
+.settle .none{color:var(--sub);font-size:13px;text-align:center;padding:6px 0}
+.tx{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.tx:last-child{border-bottom:none}
+.tx .amt{margin-left:auto;font-weight:800;color:var(--red);font-variant-numeric:tabular-nums}
+.arr{color:#b3bccd;font-weight:700}
+.cats{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.cat-tag{font-size:11px;background:#f0f4ff;color:#4263eb;border-radius:8px;padding:4px 8px}
+
+/* expenses */
+.day{margin-top:6px}
+.day-head{font-size:12px;color:var(--sub);margin:12px 2px 6px;font-weight:600}
+.exp{display:flex;align-items:center;gap:10px;padding:11px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.exp:last-child{border-bottom:none}
+.exp .ico{width:36px;height:36px;border-radius:11px;background:#f2f5fb;display:flex;
+  align-items:center;justify-content:center;font-size:18px;flex:none}
+.exp .meta{min-width:0;flex:1}
+.exp .t{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exp .s{font-size:11px;color:var(--sub);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exp .r{text-align:right;flex:none}
+.exp .a{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums}
+.exp .pp{font-size:10px;color:var(--sub)}
+.empty{color:var(--sub);font-size:13px;text-align:center;padding:18px 0}
+
+/* FAB */
+.fab{position:fixed;right:18px;bottom:22px;z-index:30;border:none;border-radius:50%;
+  width:58px;height:58px;font-size:30px;color:#fff;cursor:pointer;
+  background:linear-gradient(135deg,#3b5bdb,#4dabf7);
+  box-shadow:0 8px 24px rgba(59,91,219,.45);line-height:1}
+.fab:active{transform:scale(.94)}
+
+/* modal */
+.mask{position:fixed;inset:0;background:rgba(20,28,46,.5);z-index:40;display:none;
+  align-items:flex-end;justify-content:center;backdrop-filter:blur(2px)}
+.mask.open{display:flex}
+.sheet{background:var(--card);width:100%;max-width:560px;border-radius:22px 22px 0 0;
+  padding:18px 18px calc(20px + env(safe-area-inset-bottom));max-height:88dvh;overflow:auto;
+  animation:up .22s ease}
+@keyframes up{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
+.sheet h2{margin:0 0 14px;font-size:17px;display:flex;justify-content:space-between;align-items:center}
+.sheet h2 .x{border:none;background:#f2f5fb;border-radius:10px;width:32px;height:32px;font-size:15px;color:var(--sub);cursor:pointer}
+label.f{display:block;font-size:12px;color:var(--sub);margin:12px 0 6px;font-weight:600}
+input,select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;
+  font-size:15px;background:#fbfcff;color:var(--ink);outline:none;font-family:inherit}
+input:focus,select:focus{border-color:var(--brand)}
+input.amt-in{font-size:24px;font-weight:800;text-align:center;padding:14px;letter-spacing:1px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:#fbfcff;border-radius:11px;padding:8px 12px;
+  font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--ink)}
+.chip.sel{border-color:var(--brand);background:#eef3ff;color:var(--brand);font-weight:700}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.btn{border:none;border-radius:13px;padding:13px;font-size:15px;font-weight:700;cursor:pointer;width:100%}
+.btn.pri{background:linear-gradient(135deg,#3b5bdb,#4dabf7);color:#fff;margin-top:18px;
+  box-shadow:0 6px 18px rgba(59,91,219,.35)}
+.btn.danger{background:#fff1f0;color:var(--red);border:1.5px solid #ffd8d6;margin-top:10px}
+.btn:active{transform:scale(.98)}
+.footnote{text-align:center;font-size:11px;color:#aab3c5;margin-top:18px;line-height:2.2}
+.footnote a{color:#8a94a8}
+.mini{background:#fff;border:1px solid var(--line);border-radius:10px;font-size:12px;
+  padding:6px 10px;cursor:pointer;color:var(--sub)}
+.mini.red{background:#fff1f0;color:var(--red);border:1px solid #ffd8d6}
+
+/* toast */
+#toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);z-index:60;
+  background:rgba(29,36,51,.92);color:#fff;padding:10px 18px;border-radius:12px;font-size:13px;
+  max-width:86vw;text-align:center;opacity:0;pointer-events:none;transition:opacity .25s}
+#toast.show{opacity:1}
+#toast.err{background:rgba(190,40,40,.94)}
+
+@media (min-width:620px){
+  .hero{border-radius:0 0 30px 30px}
+  .mask{align-items:center;padding:20px}
+  .sheet{border-radius:22px;max-width:480px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="row">
+      <div class="trip">🧳 <span id="tripName">旅行 AA 记账</span></div>
+      <button class="rename" data-cmd="rename">✏️ 改名</button>
+    </div>
+    <div class="hero-main">
+      <div class="k">本行程总支出</div>
+      <div class="big" id="stTotal">¥0.00</div>
+    </div>
+    <div class="mini-row">
+      <div class="mini-cell"><b id="stPer">—</b><i>人均分摊</i></div>
+      <div class="mini-cell"><b id="stCount">0 笔</b><i>已记消费</i></div>
+      <div class="mini-cell"><b id="stPeople">0 人</b><i>同行旅伴</i></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" style="padding:0">
+  <nav class="tripbar" id="tripBar"></nav>
+</div>
+
+<main class="wrap">
+
+  <section class="card" id="cardPeople">
+    <h3>👥 本行程旅伴 <span class="hint">所有人平均分摊每笔支出</span></h3>
+    <div class="pgrid" id="pgrid"></div>
+    <div class="addp" id="addpRow">
+      <input id="pName" maxlength="12" placeholder="输入姓名，如：小美" autocomplete="off">
+      <button class="btn" style="width:auto;padding:0 18px;background:#eef3ff;color:var(--brand)" data-cmd="add-person">添加</button>
+    </div>
+  </section>
+
+  <section class="card settle">
+    <h3>💰 结算方案</h3>
+    <div id="settleBody"></div>
+    <div class="cats" id="catsBody"></div>
+  </section>
+
+  <section class="card">
+    <h3>🧾 消费明细 <span class="hint" id="expHint"></span></h3>
+    <div id="expBody"></div>
+  </section>
+
+  <div class="footnote">
+    <button class="mini red" data-cmd="clear">清空当前行程记录</button>
+    <button class="mini red" data-cmd="del-trip" id="btnDelTrip">🗑 删除当前行程</button>
+    <br>数据实时同步 · 多人同时记账自动刷新
+  </div>
+</main>
+
+<button class="fab" data-cmd="open-add" aria-label="记一笔">＋</button>
+
+<div class="mask" id="mask">
+  <div class="sheet">
+    <h2><span id="sheetTitle">记一笔</span><button class="x" data-cmd="close">✕</button></h2>
+    <label class="f">消费事项</label>
+    <input id="fItem" maxlength="60" placeholder="如：高铁票 / 海鲜大餐" autocomplete="off">
+    <label class="f">金额（元）</label>
+    <input id="fAmount" class="amt-in" inputmode="decimal" placeholder="0.00">
+    <label class="f">谁付的钱</label>
+    <div class="chips" id="fPayers"></div>
+    <label class="f">分类</label>
+    <div class="chips" id="fCats"></div>
+    <label class="f">日期</label>
+    <input id="fDate" type="date">
+    <button class="btn pri" id="btnSave" data-cmd="save-expense">保存</button>
+    <button class="btn danger" id="btnDel" data-cmd="del-expense" style="display:none">删除这条记录</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+"use strict";
+var CATS = [
+  {k:"food",n:"餐饮",i:"🍜"},{k:"hotel",n:"住宿",i:"🏨"},{k:"traffic",n:"交通",i:"🚄"},
+  {k:"ticket",n:"门票",i:"🎫"},{k:"shopping",n:"购物",i:"🛍️"},{k:"fun",n:"娱乐",i:"🎡"},
+  {k:"other",n:"其他",i:"📦"}
+];
+var catMap = {}; CATS.forEach(function(c){catMap[c.k]=c;});
+var S = null, editingId = null, lastMsg = "";
+
+function fmt(fen){
+  var neg = fen < 0; fen = Math.abs(fen);
+  var s = (fen/100).toFixed(2);
+  var parts = s.split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return (neg?"-":"") + "¥" + parts.join(".");
+}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function $(id){return document.getElementById(id);}
+
+/* 当前行程（所有记账逻辑只作用于它；规则在服务端，这里只取数展示） */
+function T(){
+  var st=S.state;
+  for(var i=0;i<st.trips.length;i++) if(st.trips[i].id===st.activeTripId) return st.trips[i];
+  return st.trips[0];
+}
+function person(trip,id){for(var i=0;i<trip.people.length;i++)if(trip.people[i].id===id)return trip.people[i];return null;}
+
+function toast(msg,err){
+  var t=$("toast"); t.textContent=msg; t.className="show"+(err?" err":"");
+  clearTimeout(toast._h); toast._h=setTimeout(function(){t.className="";},2200);
+}
+
+function cmd(body){
+  return fetch("/api/cmd",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(body)}).then(function(r){return r.json();}).then(function(res){
+      if(res.msg && res.msg!==lastMsg){toast(res.msg,!res.ok);lastMsg=res.msg;}
+      if(res.ok && res.state){S={state:res.state,summary:res.summary,tripId:res.tripId};render();}
+      return res;
+    }).catch(function(e){toast("网络异常，请重试",true);});
+}
+
+function poll(){
+  fetch("/api/state").then(function(r){return r.json();}).then(function(res){
+    if(!res.ok)return;
+    if(!S || res.state.updatedAt!==S.state.updatedAt){S=res;render();}
+  }).catch(function(){});
+}
+
+/* ---------------- render ---------------- */
+function render(){
+  if(!S)return;
+  var trip=T(), su=S.summary, n=trip.people.length, st=S.state;
+
+  /* trip switcher */
+  $("tripBar").innerHTML = st.trips.map(function(t,i){
+    var sel = t.id===st.activeTripId;
+    return '<div class="tchip'+(sel?" sel":"")+'" data-cmd="switch-trip" data-id="'+esc(t.id)+'">'+
+      '<span class="dot"></span><div>'+esc(t.name)+
+      '<div class="sm">'+(sel?"✦ 记账中":"点我切换")+' · '+t.expenses.length+'笔 ¥'+(sumFen(t)/100).toFixed(0)+'</div></div></div>';
+  }).join("") + '<div class="tchip new" data-cmd="add-trip">＋ 新行程</div>';
+  $("btnDelTrip").style.display = st.trips.length>1 ? "" : "none";
+
+  /* header = current trip */
+  $("tripName").textContent = trip.name + (trip.startDate?("（"+trip.startDate+"~"+(trip.endDate||"…")+"）"):"");
+  $("stTotal").textContent=fmt(su.totalFen);
+  $("stCount").textContent=su.count+" 笔";
+  $("stPeople").textContent=n+" 人";
+  var avg = n? Math.round(su.totalFen/n) : 0;
+  $("stPer").textContent = n? fmt(avg) : "—";
+
+  /* people */
+  var pg=$("pgrid");
+  if(!n){
+    pg.innerHTML='<div class="empty" style="width:100%">本行程还没有旅伴，先添加姓名吧</div>';
+  }else{
+    pg.innerHTML=trip.people.map(function(p){
+      var bal=su.balanceFen[p.id]||0;
+      var cls=bal>0?"pos":(bal<0?"neg":"zero");
+      var txt=bal>0?("可收 "+fmt(bal)):(bal<0?("应付 "+fmt(-bal)):"已平");
+      return '<div class="pchip"><div class="avatar" style="background:'+esc(p.color)+'">'+esc(p.name.slice(0,1))+'</div>'+
+        '<div><b>'+esc(p.name)+'</b> 付 '+fmt(su.paidFen[p.id]||0)+'<br><span class="bal '+cls+'">'+txt+'</span></div>'+
+        '<button class="pdel" data-cmd="del-person" data-id="'+esc(p.id)+'" title="移除">✕</button></div>';
+    }).join("");
+  }
+
+  /* settlement */
+  var sb=$("settleBody");
+  if(!su.transfers.length){
+    sb.innerHTML='<div class="none">'+(su.totalFen>0?"✅ 已结清，互不相欠":"记一笔后自动生成转账方案")+'</div>';
+  }else{
+    sb.innerHTML=su.transfers.map(function(t){
+      var f=person(trip,t.from), o=person(trip,t.to);
+      if(!f||!o)return "";
+      return '<div class="tx"><span class="avatar" style="width:26px;height:26px;font-size:12px;background:'+esc(f.color)+'">'+esc(f.name.slice(0,1))+'</span>'+
+        esc(f.name)+' <span class="arr">→</span> '+
+        '<span class="avatar" style="width:26px;height:26px;font-size:12px;background:'+esc(o.color)+'">'+esc(o.name.slice(0,1))+'</span>'+
+        esc(o.name)+'<span class="amt">'+fmt(t.fen)+'</span></div>';
+    }).join("");
+  }
+  var ck=Object.keys(su.byCat||{});
+  $("catsBody").innerHTML = ck.length ? ck.sort(function(a,b){return su.byCat[b]-su.byCat[a];})
+    .map(function(k){var c=catMap[k]||catMap.other;return '<span class="cat-tag">'+c.i+' '+c.n+' '+fmt(su.byCat[k])+'</span>';}).join("") : "";
+
+  /* expenses (newest first, grouped by date) */
+  var eb=$("expBody");
+  $("expHint").textContent = trip.expenses.length ? ("共 "+trip.expenses.length+" 笔") : "";
+  if(!trip.expenses.length){
+    eb.innerHTML='<div class="empty">点右下角 ＋ 在「'+esc(trip.name)+'」记第一笔开销<br>每笔都会自动在旅伴之间平分</div>';
+  }else{
+    var list=trip.expenses.slice().sort(function(a,b){
+      return a.date===b.date ? b.ts-a.ts : (a.date<b.date?1:-1);});
+    var html="", cur="";
+    list.forEach(function(e){
+      if(e.date!==cur){cur=e.date;html+='<div class="day-head">'+esc(cur)+'</div>';}
+      var c=catMap[e.cat]||catMap.other;
+      var p=person(trip,e.payerId);
+      var pp = n ? fmt(Math.floor(e.fen/n)) : "";
+      html+='<div class="exp" data-cmd="open-edit" data-id="'+esc(e.id)+'">'+
+        '<div class="ico">'+c.i+'</div><div class="meta"><div class="t">'+esc(e.item)+'</div>'+
+        '<div class="s">'+c.n+' · '+(p?esc(p.name)+" 垫付":"已删旅伴")+(n?(' · 每人 '+pp):'')+'</div></div>'+
+        '<div class="r"><div class="a">'+fmt(e.fen)+'</div><div class="pp">点击可修改</div></div></div>';
+    });
+    eb.innerHTML=html;
+  }
+}
+function sumFen(t){var s=0;for(var i=0;i<t.expenses.length;i++)s+=t.expenses[i].fen;return s;}
+
+/* ---------------- modal ---------------- */
+var selPayer=null, selCat="food";
+function buildChips(){
+  if(!S)return;
+  var trip=T();
+  if(selPayer && !person(trip,selPayer)) selPayer=null;
+  if(!selPayer && trip.people.length) selPayer=trip.people[0].id;
+  $("fPayers").innerHTML=trip.people.map(function(p){
+    return '<div class="chip'+(p.id===selPayer?" sel":"")+'" data-cmd="pick-payer" data-id="'+esc(p.id)+'">'+
+      '<span class="dot" style="background:'+esc(p.color)+'"></span>'+esc(p.name)+'</div>';
+  }).join("") || '<div class="none" style="font-size:12px;color:var(--sub)">请先在上方添加旅伴</div>';
+  $("fCats").innerHTML=CATS.map(function(c){
+    return '<div class="chip'+(c.k===selCat?" sel":"")+'" data-cmd="pick-cat" data-id="'+c.k+'">'+c.i+' '+c.n+'</div>';
+  }).join("");
+}
+function openSheet(mode,id){
+  var trip=T();
+  if(mode==="edit"){
+    var e=trip.expenses.filter(function(x){return x.id===id;})[0];
+    if(!e)return;
+    editingId=id; selPayer=e.payerId; selCat=e.cat;
+    $("sheetTitle").textContent="修改记录 · "+trip.name;
+    $("fItem").value=e.item; $("fAmount").value=(e.fen/100).toFixed(2); $("fDate").value=e.date;
+    $("btnDel").style.display="block";
+  }else{
+    editingId=null; selCat="food";
+    selPayer = rememberedPayer() || (trip.people.length ? trip.people[0].id : null);
+    $("sheetTitle").textContent="记一笔 · "+trip.name;
+    $("fItem").value=""; $("fAmount").value=""; $("fDate").value=today();
+    $("btnDel").style.display="none";
+  }
+  buildChips();
+  $("mask").classList.add("open");
+  if(mode!=="edit") setTimeout(function(){$("fItem").focus();},250);
+}
+function closeSheet(){$("mask").classList.remove("open");editingId=null;}
+function today(){var d=new Date();function z(x){return x<10?"0"+x:""+x;}
+  return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());}
+
+/* 记住本浏览器上次选的付款人（localStorage，各手机独立，不占服务器资源） */
+function rememberPayer(id){try{localStorage.setItem("ts_payer",id);}catch(e){}}
+function rememberedPayer(){try{var id=localStorage.getItem("ts_payer");
+  return (id && person(T(),id)) ? id : null;}catch(e){return null;}}
+
+function saveExpense(){
+  var trip=T();
+  if(!trip.people.length){toast("请先添加旅伴",true);return;}
+  var item=$("fItem").value.trim(), amount=$("fAmount").value.trim();
+  if(!item){toast("请填写消费事项",true);return;}
+  if(!/^\d+(\.\d{1,2})?$/.test(amount)){toast("金额格式不对（最多两位小数）",true);return;}
+  if(!selPayer){toast("请选择付款人",true);return;}
+  var body={type:editingId?"edit_expense":"add_expense",item:item,amount:amount,
+    payerId:selPayer,cat:selCat,date:$("fDate").value||today()};
+  if(editingId)body.id=editingId;
+  cmd(body).then(function(res){if(res.ok)closeSheet();});
+}
+
+/* ---------------- events (document 委托) ---------------- */
+document.addEventListener("click",function(ev){
+  var el=ev.target.closest("[data-cmd]");
+  if(!el)return;
+  var cmdType=el.getAttribute("data-cmd"), id=el.getAttribute("data-id");
+  if(cmdType!=="close" && !S){return;}
+  switch(cmdType){
+    case "switch-trip":
+      if(id!==S.state.activeTripId)cmd({type:"switch_trip",id:id});
+      break;
+    case "add-trip":
+      var tn=prompt("新行程叫什么？（如：国庆潮汕行）","");
+      if(tn!==null && tn.trim())cmd({type:"add_trip",name:tn.trim()});
+      break;
+    case "del-trip":
+      var cur=T();
+      if(S.state.trips.length<=1){toast("至少保留一段行程",true);break;}
+      if(confirm("确定删除行程「"+cur.name+"」？"+cur.expenses.length+" 笔消费会一并删除，无法找回！"))
+        if(confirm("再确认：「"+cur.name+"」连同旅伴和全部记录彻底删除？"))
+          cmd({type:"delete_trip",id:cur.id});
+      break;
+    case "rename":
+      var nm=prompt("给当前行程起个名字：", T().name);
+      if(nm!==null && nm.trim())cmd({type:"set_trip",name:nm.trim()});
+      break;
+    case "add-person":
+      var pn=$("pName").value.trim();
+      if(pn){cmd({type:"add_person",name:pn});$("pName").value="";}
+      break;
+    case "del-person":
+      var p=person(T(),id);
+      if(p && confirm("确定移除旅伴「"+p.name+"」？"))cmd({type:"remove_person",id:id});
+      break;
+    case "open-add": openSheet("add"); break;
+    case "open-edit": openSheet("edit",id); break;
+    case "close": closeSheet(); break;
+    case "pick-payer": selPayer=id; rememberPayer(id); buildChips(); break;
+    case "pick-cat": selCat=id; buildChips(); break;
+    case "save-expense": saveExpense(); break;
+    case "del-expense":
+      if(editingId && confirm("确定删除这条记录？")){
+        cmd({type:"delete_expense",id:editingId}); closeSheet();
+      }
+      break;
+    case "clear":
+      var cn=T().name;
+      if(confirm("确定清空「"+cn+"」的全部消费记录？旅伴会保留。"))
+        if(confirm("再确认一次：该行程所有明细将无法找回！"))cmd({type:"clear_expenses"});
+      break;
+  }
+});
+document.addEventListener("keydown",function(ev){
+  if(ev.key==="Enter" && ev.target && ev.target.id==="pName"){
+    var pn=ev.target.value.trim();
+    if(pn){cmd({type:"add_person",name:pn});ev.target.value="";}
+  }
+});
+$("mask").addEventListener("click",function(ev){if(ev.target===$("mask"))closeSheet();});
+
+poll(); setInterval(poll,2000);
+</script>
+</body>
+</html>
